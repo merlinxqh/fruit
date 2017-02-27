@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <properties url="file:///E:/workspace/fruit-parent/fruit-pms/fruit-pms-web/src/main/resources/application.properties"/>
+  
+  <classPathEntry location="E:/maven_repo/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar" />
+  
+  <!-- This should cause an error because sqlMapGenerator is required
+       if there is no javaClientGenerator -->
+  <context id="MyBatis3NoClient" targetRuntime="MyBatis3" defaultModelType="flat">
+    <!-- <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" /> -->
+	
+	<commentGenerator type="org.mybatis.generator.ext.MyCommentGenerator">
+		<property name="suppressAllComments" value="false" />
+	</commentGenerator>
+
+	<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/fruit-pms?useUnicode=true&amp;characterEncoding=utf-8"
+			userId="root" password="root" />
+	
+	<!-- 实体类 -->
+    <javaModelGenerator targetPackage="com.fruit.pms.dao.model" targetProject="fruit-pms-dao">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+      <property name="rootClass" value="com.fruit.base.framework.entity.BaseEntity"/>
+    </javaModelGenerator>
+	
+	<!-- sql文件 -->
+	<sqlMapGenerator targetPackage="com.fruit.pms.dao.mapper" targetProject="fruit-pms-dao/src/main/resources" />
+   		
+   	<!-- mapper层 -->
+	<javaClientGenerator type="XMLMAPPER" targetPackage="com.fruit.pms.dao.mapper"
+     	targetProject="fruit-pms-dao" interfaceExtendSupInterface="com.fruit.base.framework.dao.CrudMapper"
+     	mapperScanAnnotation="com.fruit.base.framework.mybatis.annotation.MyBatisDao">
+    </javaClientGenerator>
+	
+	<!-- service -->
+	<javaServiceGenerator targetPackage="com.fruit.pms.service"
+		targetProject="fruit-pms-service" interfaceExtendSupInterface="com.fruit.base.framework.service.BaseCrudService"
+		extendSupClass="com.fruit.base.framework.service.impl.BaseCrudServiceImpl" /> 
+	
+    <tableSetting isSchema="true" enableCountByExample="false"
+		enableUpdateByExample="false" enableDeleteByExample="false"
+		enableSelectByExample="false" selectByExampleQueryId="false">
+		<prop name="replaceTablePrefix">
+			<list>
+				<prefix name="T" value="" />
+			</list>
+		</prop>
+		<!-- 忽略schema，避免在xml中出现schema.表名 -->
+		<prop name="ignoreGeneratorSchema" value="true" />
+	</tableSetting>
+  </context>
+
+</generatorConfiguration>

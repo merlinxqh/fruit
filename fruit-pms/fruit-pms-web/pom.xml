@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.fruit</groupId>
+    <artifactId>fruit-pms</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>fruit-pms-web</artifactId>
+  <packaging>war</packaging>
+  <name>${project.artifactId} Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+      <dependency>
+           <groupId>com.fruit</groupId>
+	       <artifactId>fruit-pms-service</artifactId>
+	       <version>${project.version}</version>
+      </dependency>
+      <!-- spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>4.0.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>4.0.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>4.0.2.RELEASE</version>
+		</dependency>
+  </dependencies>
+  <build>
+    <finalName>fruit-pms-web</finalName>
+    <plugins>
+        <plugin>
+		  <groupId>org.eclipse.jetty</groupId>
+		  <artifactId>jetty-maven-plugin</artifactId>
+		  <version>9.2.10.v20150310</version>
+	    </plugin>
+    </plugins>
+  </build>
+</project>

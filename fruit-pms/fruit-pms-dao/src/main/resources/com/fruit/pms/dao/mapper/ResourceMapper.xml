@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fruit.pms.dao.mapper.ResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.fruit.pms.dao.model.Resource" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="long_code" property="longCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="icon_style" property="iconStyle" jdbcType="VARCHAR" />
+    <result column="sorting" property="sorting" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.code, t.long_code, t.name, t.url, t.parent_code, t.type, t.icon_style, t.sorting, 
+    t.description, t.gmt_create, t.gmt_modified
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null" >
+        and t.id = #{params.id,jdbcType=BIGINT}
+      </if>
+      <if test="params.code != null and '' != params.code" >
+        and t.code = #{params.code,jdbcType=VARCHAR}
+      </if>
+      <if test="params.longCode != null and '' != params.longCode" >
+        and t.long_code = #{params.longCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and t.name = #{params.name,jdbcType=VARCHAR}
+      </if>
+      <if test="params.url != null and '' != params.url" >
+        and t.url = #{params.url,jdbcType=VARCHAR}
+      </if>
+      <if test="params.parentCode != null and '' != params.parentCode" >
+        and t.parent_code = #{params.parentCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.type != null" >
+        and t.type = #{params.type,jdbcType=INTEGER}
+      </if>
+      <if test="params.iconStyle != null and '' != params.iconStyle" >
+        and t.icon_style = #{params.iconStyle,jdbcType=VARCHAR}
+      </if>
+      <if test="params.sorting != null" >
+        and t.sorting = #{params.sorting,jdbcType=INTEGER}
+      </if>
+      <if test="params.description != null and '' != params.description" >
+        and t.description = #{params.description,jdbcType=VARCHAR}
+      </if>
+      <if test="params.gmtCreate != null" >
+        and t.gmt_create = #{params.gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.gmtModified != null" >
+        and t.gmt_modified = #{params.gmtModified,jdbcType=TIMESTAMP}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from resource t 
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from resource t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from resource t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from resource t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from resource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.fruit.pms.dao.model.Resource" >
+    delete from resource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fruit.pms.dao.model.Resource" >
+    insert into resource (id, code, long_code, 
+      name, url, parent_code, 
+      type, icon_style, sorting, 
+      description, gmt_create, gmt_modified
+      )
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{longCode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{iconStyle,jdbcType=VARCHAR}, #{sorting,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fruit.pms.dao.model.Resource" >
+    insert into resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="longCode != null" >
+        long_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="parentCode != null" >
+        parent_code,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="iconStyle != null" >
+        icon_style,
+      </if>
+      <if test="sorting != null" >
+        sorting,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="longCode != null" >
+        #{longCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="iconStyle != null" >
+        #{iconStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="sorting != null" >
+        #{sorting,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fruit.pms.dao.model.Resource" >
+    update resource
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="longCode != null" >
+        long_code = #{longCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        parent_code = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="iconStyle != null" >
+        icon_style = #{iconStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="sorting != null" >
+        sorting = #{sorting,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fruit.pms.dao.model.Resource" >
+    update resource
+    set code = #{code,jdbcType=VARCHAR},
+      long_code = #{longCode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      parent_code = #{parentCode,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      icon_style = #{iconStyle,jdbcType=VARCHAR},
+      sorting = #{sorting,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
