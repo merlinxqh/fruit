@@ -15,13 +15,27 @@
 			<entry key="x-ha-policy" value="all" />
 		</rabbit:queue-arguments>
 	</rabbit:queue>
+	<!--1. direct exchange 不需要指定exchange, 用rabbitmq默认exchange "" -->
 	
-	<!-- 注册广播交换器 -->
-	<rabbit:fanout-exchange name="QUEUE_TEST_EXCHANGE">
-		<rabbit:bindings>
-			<rabbit:binding queue="QUEUE_TEST"/>
-		</rabbit:bindings>
-	</rabbit:fanout-exchange>
+	
+	<!--2. fanout-exchange 消息会发送到该交换机绑定的所有队列上  路由麦的模式
+	   这种模式不需要RouteKey
+	  这种模式需要提前将Exchange于Queue进行绑定,一个Exchange可以绑定多个Queue,一个Queue可以同多个Exchange进行绑定.
+	 -->
+<!-- 	<rabbit:fanout-exchange name="FANOUT_QUEUE_TEST_EXCHANGE"> -->
+<!-- 		<rabbit:bindings> -->
+<!-- 			<rabbit:binding queue="QUEUE_TEST"/> -->
+<!-- 		</rabbit:bindings> -->
+<!-- 	</rabbit:fanout-exchange> -->
+    <!-- 3. TOPIC exchange
+    	“#”表示0个或若干个关键字，“*”表示一个关键字。
+    	如“log.*”能与“log.warn”匹配，无法与“log.warn.timeout”匹配；
+    	但是“log.#”能与上述两者匹配。 -->
+    <rabbit:topic-exchange name="TOPIC_QUEUE_TEST_EXCHANGE">
+       <rabbit:bindings>
+           <rabbit:binding pattern="#.TEST.#" queue="QUEUE_TEST"></rabbit:binding>
+       </rabbit:bindings>
+    </rabbit:topic-exchange>
 
 	<!-- #################################################################### -->
 	<!-- # RabbitMQ 消息监听容器（消费者） -->

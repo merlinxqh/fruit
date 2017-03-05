@@ -16,12 +16,18 @@
 		</rabbit:queue-arguments>
 	</rabbit:queue>
 	
-	<!-- 注册广播交换器 -->
-	<rabbit:fanout-exchange name="QUEUE_TEST_EXCHANGE">
-		<rabbit:bindings>
-			<rabbit:binding queue="QUEUE_TEST"/>
-		</rabbit:bindings>
-	</rabbit:fanout-exchange>
+	<!-- 交换机 -->
+<!-- 	<rabbit:fanout-exchange name="QUEUE_TEST_EXCHANGE"> -->
+<!-- 		<rabbit:bindings> -->
+<!-- 			<rabbit:binding queue="QUEUE_TEST"/> -->
+<!-- 		</rabbit:bindings> -->
+<!-- 	</rabbit:fanout-exchange> -->
+<!-- 	<rabbit:direct-exchange name=""> -->
+	    
+<!-- 	</rabbit:direct-exchange> -->
+<!-- 	<rabbit:topic-exchange name=""> -->
+	   
+<!-- 	</rabbit:topic-exchange> -->
 
 	<!-- #################################################################### -->
 	<!-- # RabbitMQ 消息监听容器（消费者） -->
