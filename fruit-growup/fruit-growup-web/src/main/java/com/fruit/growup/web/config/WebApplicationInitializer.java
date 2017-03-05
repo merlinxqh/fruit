@@ -20,9 +20,9 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
 	 */
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] {BackConfig.class,SecurityConfig.class,DatabaseConfig.class, MapperScannerConfig.class, 
-				DubboConfig.class, ExportServiceConfig.class};
-//		, CacheConfig.class ,
+		return new Class[] {BackConfig.class,SecurityConfig.class,  
+				DubboConfig.class,DatabaseConfig.class, MapperScannerConfig.class,ExportServiceConfig.class};
+//		, CacheConfig.class ,,  
 	}
 	
 	@Override

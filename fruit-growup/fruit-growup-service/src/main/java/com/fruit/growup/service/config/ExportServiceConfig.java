@@ -21,5 +21,4 @@ public class ExportServiceConfig{
         serviceBean.setRef(growUpPlanApiService);
         return serviceBean;
     }
-	
 }

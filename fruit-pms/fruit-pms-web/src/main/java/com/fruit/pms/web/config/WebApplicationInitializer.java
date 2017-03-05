@@ -5,7 +5,6 @@ import javax.servlet.Filter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.fruit.pms.dao.config.DatabaseConfig;
-import com.fruit.pms.dao.config.MapperScannerConfig;
 import com.fruit.pms.service.config.ConsumerConfig;
 
 /**
@@ -20,9 +19,8 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
 	 */
 	@Override
 	protected Class<?>[] getRootConfigClasses(){
-		return new Class[] {BackConfig.class,SecurityConfig.class, DatabaseConfig.class, MapperScannerConfig.class,
-				DubboConfig.class,ConsumerConfig.class};
-//		
+		return new Class[] {BackConfig.class,SecurityConfig.class,DatabaseConfig.class,DubboConfig.class,ConsumerConfig.class };
+//		,
 	}
 	
 	@Override

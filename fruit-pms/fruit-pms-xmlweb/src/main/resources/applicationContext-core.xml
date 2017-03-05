@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:task="http://www.springframework.org/schema/task" 
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+    http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    http://www.springframework.org/schema/jee  http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+    http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<!--开启注解 -->
+	<context:annotation-config />
+	
+	<!-- 开启自动切面代理 -->
+	<aop:aspectj-autoproxy />
+	
+	<context:component-scan base-package="com.fruit">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
+	<!-- #################################################################### -->
+	<!-- # 装载属性占位符配置 -->
+	<!-- #################################################################### -->
+	<context:property-placeholder properties-ref="customProperties" />
+	<bean id="customProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean" p:ignoreResourceNotFound="true" p:localOverride="true">
+		<property name="locations">
+			<list>
+				<!-- 标准配置-->
+				<value>classpath*:/application.properties</value>		
+				<!--本地开发环境配置-->
+				<value>file:/d:/conf/pms/*.properties</value>
+				<!--服务器生产环境配置-->
+                <value>file:/etc/conf/pms/*.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 开启注解事务支持 -->	
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		 <property name="dataSource" ref="dataSourcejdbc"/>
+	</bean>	
+
+	<!-- 会自动将basePackage中配置的包路径下的所有带有@Mapper标注的接口生成代理类，实现数据访问 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" /> 
+		<property name="basePackage" value="com.fruit.pms.dao.mapper" />
+	</bean>
+	
+	<!--定义 sqlSessionTemplate -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0">
+			<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+				<property name="dataSource" ref="dataSourcejdbc"></property>
+				<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+			</bean>
+		</constructor-arg>
+		<constructor-arg index="1" value="SIMPLE" />
+		<constructor-arg index="2">
+			<null />
+		</constructor-arg>
+	</bean> 
+	
+	<!-- 配置数据源 druid连接池 -->
+	<bean id="abstractDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" abstract="true">
+		<!-- <property name="url" value="${jdbc.url}" /> -->
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="${druid.initialSize}" />
+		<!-- 连接池最大使用连接数量 -->
+		<property name="maxActive" value="${druid.maxActive}" />
+		<!-- 连接池最大空闲 -->
+		<property name="maxIdle" value="${druid.maxIdle}" />
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="${druid.minIdle}" />
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="${druid.maxWait}" />
+
+		<!-- <property name="poolPreparedStatements" value="true" /> <property name="maxPoolPreparedStatementPerConnectionSize" value="33" /> -->
+
+		<property name="validationQuery" value="${druid.validationQuery}" />
+		<property name="testOnBorrow" value="${druid.testOnBorrow}" />
+		<property name="testOnReturn" value="false" />
+		<property name="testWhileIdle" value="true" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="25200000" />
+
+		<!-- 打开removeAbandoned功能 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 1800秒，也就是30分钟 -->
+		<property name="removeAbandonedTimeout" value="1800" />
+		<!-- 关闭abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="true" />
+
+		<!-- 监控数据库 -->
+		<!-- <property name="filters" value="stat" /> -->
+		<property name="filters" value="mergeStat" />
+	</bean>
+	<bean id="dataSourcejdbc" class="com.fruit.base.framework.dao.DynamicRoutingDataSource">
+		<property name="defaultTargetDataSource">
+			<bean parent="abstractDataSource" p:url="${jdbc.url.slave}" />
+		</property>
+		<property name="targetDataSources">
+			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
+				<entry key="#{T(com.fruit.base.framework.dao.DynamicRoutingDataSource).MASTER_DATA_SOURCE}">
+					<bean parent="abstractDataSource" p:url="${jdbc.url.master}" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	
+	<!-- #################################################################### -->
+	<!-- # 导入资源配置文件 -->
+	<!-- #################################################################### -->
+<!-- 	<import resource="classpath:/applicationContext-redis.xml" /> -->
+	<import resource="classpath:/spring-dubbo-core.xml" />
+	<import resource="classpath:/spring-dubbo-consumer.xml" />
+<!-- 	<import resource="classpath:/spring-dubbo-provider.xml" /> -->
+	<import resource="classpath:/applicationContext-rabbitmq-core.xml" />
+	<import resource="classpath:/applicationContext-rabbitmq-consumer.xml" />
+</beans>
+
+

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd   
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop-4.1.xsd"
+	default-lazy-init="true" default-autowire="byName">	
+
+	<!-- 自动搜索@Controller标注的类 -->
+	<context:component-scan base-package="com.fruit" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>	
+	
+	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
+	<bean id="mappingJackson2HttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+				<value>text/json;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+		<!-- #################################################################### -->
+	<!-- # 装载属性占位符配置 -->
+	<!-- #################################################################### -->
+	<context:property-placeholder properties-ref="customProperties" />
+	<bean id="customProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean" p:ignoreResourceNotFound="true" p:localOverride="true">
+		<property name="locations">
+			<list>
+				<!-- 标准配置-->
+				<value>classpath*:/application.properties</value>		
+				<!--本地开发环境配置-->
+				<value>file:/d:/conf/promotion/application.properties</value>
+				<!--服务器生产环境配置-->
+                <value>file:/etc/conf/promotion/application.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 这是简单配置，代替bean节点那种显示加载bean的配置方式，可以自动加载必须得如下两个bean -->
+	<!-- <mvc:annotation-driven /> -->
+	<!-- 这是标准配置，可以解决ResponseBody中文乱码问题 -->
+	<bean  class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJackson2HttpMessageConverter" />    <!-- JSON转换器 -->
+			</list>
+		</property>
+	</bean>	
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	
+	
+	
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <property name="maxUploadSize" value="10485760" />  
+    </bean>
+</beans>

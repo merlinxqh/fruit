@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.5.xsd">
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 消息转换器 -->
+	<!-- #################################################################### -->
+	<bean id="rabbitMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter">
+		<property name="classMapper">
+			<bean class="org.springframework.amqp.support.converter.DefaultJackson2JavaTypeMapper" />
+		</property>
+	</bean>
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 异常处理程序 -->
+	<!-- #################################################################### -->
+	<bean id="logAndPropagateErrorHandler" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+		<property name="staticField">
+			<value>org.springframework.scheduling.support.TaskUtils.LOG_AND_PROPAGATE_ERROR_HANDLER</value>
+		</property>
+	</bean>
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 线程池（供创建连接使用） -->
+	<!-- #################################################################### -->
+	<bean id="rabbitExecutor" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod">
+			<value>java.util.concurrent.Executors.newFixedThreadPool</value>
+		</property>
+		<property name="arguments">
+			<array>
+				<value>10</value>
+			</array>
+		</property>
+	</bean>
+
+	<!-- #################################################################### -->
+	<!-- # rabbit 连接工厂 -->
+	<!-- #################################################################### -->
+	<rabbit:connection-factory id="rabbitConnectionFactory" addresses="${rabbit.host}" username="${rabbit.username}" password="${rabbit.password}"
+		executor="rabbitExecutor" />
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 管理员 -->
+	<!-- #################################################################### -->
+	<rabbit:admin id="rabbitAdmin" connection-factory="rabbitConnectionFactory" />
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 队列 -->
+	<!-- #################################################################### -->
+
+	
+	
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 模板（生产者） -->
+	<!-- #################################################################### -->
+	<rabbit:template id="rabbitTemplate" connection-factory="rabbitConnectionFactory" channel-transacted="false" message-converter="rabbitMessageConverter" />
+	
+</beans>
