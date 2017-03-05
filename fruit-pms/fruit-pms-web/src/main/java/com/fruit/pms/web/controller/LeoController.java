@@ -1,7 +1,6 @@
 package com.fruit.pms.web.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -11,37 +10,22 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
-import com.fruit.base.framework.utils.IDGeneratorUtil;
-import com.fruit.pms.dao.model.Resource;
-import com.fruit.pms.service.ResourceService;
+import com.fruit.growup.api.GrowUpPlanApiService;
 
 @Controller
 public class LeoController {
 	
-   
-   @Autowired
-   private ResourceService resourceService;
+//	@Reference(version="1.0.0",interfaceClass=GrowUpPlanApiService.class,check=false,timeout=5000,retries=3)
+	@Autowired
+	private GrowUpPlanApiService growUpPlanApiService;
 	
-	@RequestMapping(value="addResource",method=RequestMethod.GET)
-	public @ResponseBody JSONObject addUser(String userName){
-		Resource res=new Resource();
-		res.setCode(IDGeneratorUtil.getCode());
-		res.setDescription("根节点");
-		res.setName("HOME");
-		res.setLongCode(res.getCode());
-		res.setParentCode(null);
-		res.setIconStyle("");
-		res.setGmtCreate(new Date());
-		res.setGmtModified(new Date());
-		res.setType(1);
-		res.setSorting(0);
-		res.setUrl("pms/index");
-		resourceService.add(res);
-		return new JSONObject();
+   
+	@RequestMapping("dubbo")
+	public @ResponseBody Object dubbo(){
+		System.out.println("ddddddd");
+		return growUpPlanApiService.getList();
 	}
 	
 	

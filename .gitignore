@@ -90,3 +90,11 @@ fruit-pms/fruit-pms-web/.settings/org.eclipse.wst.common.project.facet.core.xml
 fruit-pms/fruit-pms-web/.settings/org.eclipse.wst.jsdt.ui.superType.container
 fruit-pms/fruit-pms-web/.settings/org.eclipse.wst.jsdt.ui.superType.name
 fruit-pms/fruit-pms-web/.settings/org.eclipse.wst.validation.prefs
+fruit-growup/fruit-growup-api/.settings/org.eclipse.wst.common.component
+fruit-growup/fruit-growup-api/.settings/org.eclipse.wst.common.project.facet.core.xml
+fruit-growup/fruit-growup-dao/.settings/org.eclipse.wst.common.component
+fruit-growup/fruit-growup-dao/.settings/org.eclipse.wst.common.project.facet.core.xml
+fruit-growup/fruit-growup-manager/.settings/org.eclipse.wst.common.component
+fruit-growup/fruit-growup-manager/.settings/org.eclipse.wst.common.project.facet.core.xml
+fruit-growup/fruit-growup-service/.settings/org.eclipse.wst.common.component
+fruit-growup/fruit-growup-service/.settings/org.eclipse.wst.common.project.facet.core.xml

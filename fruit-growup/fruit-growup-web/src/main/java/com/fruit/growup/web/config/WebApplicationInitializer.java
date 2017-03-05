@@ -1,12 +1,12 @@
-package com.fruit.pms.web.config;
+package com.fruit.growup.web.config;
 
 import javax.servlet.Filter;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import com.fruit.pms.dao.config.DatabaseConfig;
-import com.fruit.pms.dao.config.MapperScannerConfig;
-import com.fruit.pms.service.config.ConsumerConfig;
+import com.fruit.growup.dao.config.DatabaseConfig;
+import com.fruit.growup.dao.config.MapperScannerConfig;
+import com.fruit.growup.service.config.ExportServiceConfig;
 
 /**
  * 项目启动基类
@@ -19,10 +19,10 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
 	 * @return
 	 */
 	@Override
-	protected Class<?>[] getRootConfigClasses(){
-		return new Class[] {BackConfig.class,SecurityConfig.class, DatabaseConfig.class, MapperScannerConfig.class,
-				DubboConfig.class,ConsumerConfig.class};
-//		
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class[] {BackConfig.class,SecurityConfig.class,DatabaseConfig.class, MapperScannerConfig.class, 
+				DubboConfig.class, ExportServiceConfig.class};
+//		, CacheConfig.class ,
 	}
 	
 	@Override

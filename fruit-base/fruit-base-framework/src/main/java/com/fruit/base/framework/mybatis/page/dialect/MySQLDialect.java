@@ -1,12 +1,7 @@
 package com.fruit.base.framework.mybatis.page.dialect;
 
 /**
- * Mysql方言的实现
- *
- * @author CMM
- *
- * 2016年2月17日 上午9:21:37
- * @since JDK 1.5
+ * Mysql翻页的实现
  */
 public class MySQLDialect implements Dialect {
 

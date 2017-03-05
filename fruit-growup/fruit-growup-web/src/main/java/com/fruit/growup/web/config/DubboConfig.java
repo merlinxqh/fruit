@@ -1,4 +1,4 @@
-package com.fruit.pms.web.config;
+package com.fruit.growup.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,11 +19,11 @@ import com.alibaba.dubbo.config.spring.AnnotationBean;
 public class DubboConfig {
 
 	
-	public static final String APPLICATION_NAME = "consumer-app";
+	public static final String APPLICATION_NAME = "provider-app";
 
     public static final String REGISTRY_ADDRESS = "zookeeper://192.168.1.107:2181";
 
-    public static final String ANNOTATION_PACKAGE = "com.fruit.pms.web.controller";
+    public static final String ANNOTATION_PACKAGE = "com.fruit.growup.service";
     
     /**
      * 当前应用配置
@@ -71,7 +71,7 @@ public class DubboConfig {
     public ProtocolConfig protocol(){
     	ProtocolConfig protocol = new ProtocolConfig();
     	protocol.setName("dubbo");
-    	protocol.setPort(21006);
+    	protocol.setPort(22028);
     	protocol.setThreads(200);
     	return protocol;
     }
@@ -79,7 +79,7 @@ public class DubboConfig {
     @Bean
     public AnnotationBean annotationBean(){
     	AnnotationBean annotationBean=new AnnotationBean();
-    	annotationBean.setPackage("com.fruit.pms.web.controller");
+    	annotationBean.setPackage(ANNOTATION_PACKAGE);
     	return annotationBean;
     }
 }

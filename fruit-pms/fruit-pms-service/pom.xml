@@ -21,6 +21,11 @@
      </dependency>
      <dependency>
         <groupId>com.fruit</groupId>
+	    <artifactId>fruit-growup-api</artifactId>
+	    <version>${project.version}</version>
+     </dependency>
+     <dependency>
+        <groupId>com.fruit</groupId>
 	    <artifactId>fruit-pms-dao</artifactId>
 	    <version>${project.version}</version>
      </dependency>
