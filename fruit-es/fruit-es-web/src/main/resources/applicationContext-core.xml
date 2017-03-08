@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:task="http://www.springframework.org/schema/task" 
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+    http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    http://www.springframework.org/schema/jee  http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+    http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<!--开启注解 -->
+	<context:annotation-config />
+	
+	<!-- 开启自动切面代理 -->
+	<aop:aspectj-autoproxy />
+	
+	<context:component-scan base-package="com.fruit">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
+	<!-- #################################################################### -->
+	<!-- # 装载属性占位符配置 -->
+	<!-- #################################################################### -->
+	<context:property-placeholder properties-ref="customProperties" />
+	<bean id="customProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean" p:ignoreResourceNotFound="true" p:localOverride="true">
+		<property name="locations">
+			<list>
+				<!-- 标准配置-->
+				<value>classpath*:/application.properties</value>		
+				<!--本地开发环境配置-->
+				<value>file:/d:/conf/pms/*.properties</value>
+				<!--服务器生产环境配置-->
+                <value>file:/etc/conf/pms/*.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!-- #################################################################### -->
+	<!-- # 导入资源配置文件 -->
+	<!-- #################################################################### -->
+<!-- 	<import resource="classpath:/applicationContext-redis.xml" /> -->
+	<import resource="classpath:/spring-dubbo-core.xml" />
+	<import resource="classpath:/spring-dubbo-consumer.xml" />
+<!-- 	<import resource="classpath:/spring-dubbo-provider.xml" /> -->
+	<import resource="classpath:/applicationContext-rabbitmq-core.xml" />
+<!-- 	<import resource="classpath:/applicationContext-rabbitmq-consumer.xml" /> -->
+    <import resource="classpath:/applicationContext-esClient.xml" />
+</beans>
+
+

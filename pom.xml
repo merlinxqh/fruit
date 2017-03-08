@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.fruit</groupId>
@@ -12,7 +12,7 @@
 
 <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.version>4.1.6.RELEASE</spring.version>
+    <spring.version>4.2.5.RELEASE</spring.version>
     <org.quartz.version>2.2.2</org.quartz.version>
     <logback.version>1.1.3</logback.version>
     <org.slf4j.version>1.6.6</org.slf4j.version>
@@ -277,5 +277,6 @@
   	<module>fruit-cache</module>
   	<module>fruit-pms</module>
   	<module>fruit-growup</module>
+    <module>fruit-es</module>
   </modules>
 </project>
