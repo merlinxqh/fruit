@@ -92,5 +92,11 @@
 			<ref bean="stringRedisSerializer" />
 		</property>
 	</bean>
-
+	<!-- redis消息监听器,需要配置将redis里面的配置改成如下:notify-keyspace-events "Ex" -->
+    <bean id="redisMessageListenerContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
+    	<property name="connectionFactory" ref="jedisConnectionFactory" />
+    </bean>
+    <bean id="redisTestListener" class="com.fruit.es.listener.RedisTestListener">
+    	<constructor-arg name="listenerContainer" ref="redisMessageListenerContainer" />
+    </bean>
 </beans>
