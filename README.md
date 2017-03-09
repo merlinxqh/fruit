@@ -6,3 +6,4 @@
 3. dubbo,zookeeper相关
 4. 添加通过xml配置启动项目
 5. 添加消息队列rabbitmq 
+6. 添加搜索引擎elasticsearch
