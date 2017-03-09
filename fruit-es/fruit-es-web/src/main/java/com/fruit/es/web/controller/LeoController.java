@@ -1,6 +1,7 @@
 package com.fruit.es.web.controller;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,15 @@ public class LeoController {
 	   es.setPrice(123.45d);
 	   es.setCreateDate(new Date());
 	   this.esResourceService.persistObj(es, es.getId());
+	   System.out.println(es.getId());
 	   return new JSONObject();
+   }
+   
+   @RequestMapping(value="find",method=RequestMethod.GET)
+   public @ResponseBody JSONObject find(){
+	   JSONObject json=new JSONObject();
+	  List<EsResource> elist= esResourceService.findObjects(EsResource.class, "name", "南山区");
+	  json.put("list", elist);
+	   return json;
    }
 }
