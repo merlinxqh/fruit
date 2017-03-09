@@ -1,7 +1,9 @@
 package com.fruit.es.web.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +28,11 @@ public class LeoController {
     * @return
     */
    @RequestMapping(value="addIndex",method=RequestMethod.GET)
-   public @ResponseBody JSONObject addIndex(){
+   public @ResponseBody JSONObject addIndex(String name,String title){
 	   EsResource es=new EsResource();
 	   es.setId(UUID.randomUUID().toString().replaceAll("-", ""));
-	   es.setName("深圳市南山区和谐社会有你就好");
-	   es.setTitle("美好社会,需要你我共同努力...title");
+	   es.setName(name);
+	   es.setTitle(title);
 	   es.setPrice(123.45d);
 	   es.setCreateDate(new Date());
 	   this.esResourceService.persistObj(es, es.getId());
@@ -43,6 +45,21 @@ public class LeoController {
 	   JSONObject json=new JSONObject();
 	  List<EsResource> elist= esResourceService.findObjects(EsResource.class, "name", "南山区");
 	  json.put("list", elist);
+	   return json;
+   }
+   
+   
+   /**
+    * 搜索
+    * @return
+    */
+   @RequestMapping(value="search",method=RequestMethod.GET)
+   public @ResponseBody JSONObject search(String keywords){
+	   JSONObject json=new JSONObject();
+	   Map<String,Object> param=new HashMap<>();
+	   param.put("sort", "createDate");
+	   param.put("keywords", keywords);
+	   json.put("resData", this.esResourceService.searchResource(param));
 	   return json;
    }
 }
