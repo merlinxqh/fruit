@@ -143,3 +143,7 @@ fruit-es/fruit-es-web/.settings/org.eclipse.wst.validation.prefs
 fruit-growup/fruit-growup-api/.settings/org.eclipse.wst.validation.prefs
 fruit-growup/fruit-growup-dao/.settings/org.eclipse.wst.validation.prefs
 fruit-growup/fruit-growup-service/.settings/org.eclipse.wst.validation.prefs
+fruit-cache/.settings/org.eclipse.wst.common.component
+fruit-cache/.settings/org.eclipse.wst.common.project.facet.core.xml
+fruit-es/fruit-es-api/.settings/org.eclipse.wst.common.component
+fruit-es/fruit-es-api/.settings/org.eclipse.wst.common.project.facet.core.xml
