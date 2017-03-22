@@ -25,5 +25,4 @@ public class RedisTestListener extends KeyspaceEventMessageListener{
 		String key = new String(message.getBody());	
 		logger.info("redis key is {}...",key);
 	}
-
 }

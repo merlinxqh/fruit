@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.fruit.growup.dto.GrowUpPlanDto;
 
-@Service
+//@Service
 public class TestRabbitMQProvider {
   
-	@Autowired
+//	@Autowired
 	private RabbitTemplate rabbitTemplate;
 	
 	public void sentMsgToQueue(){

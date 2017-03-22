@@ -11,7 +11,7 @@ import com.fruit.growup.api.GrowUpPlanApiService;
 public class ConsumerConfig{
 
 	@Bean
-    public ReferenceBean<GrowUpPlanApiService> person() {
+    public ReferenceBean<GrowUpPlanApiService> growUpPlanApiService() {
         ReferenceBean<GrowUpPlanApiService> ref = new ReferenceBean<GrowUpPlanApiService>();
         ref.setVersion("1.0.0");
         ref.setInterface(GrowUpPlanApiService.class);

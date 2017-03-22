@@ -1,6 +1,5 @@
 package com.fruit.growup.web.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,26 +18,6 @@ import com.alibaba.dubbo.config.spring.AnnotationBean;
  */
 @Configuration
 public class DubboConfig {
-
-    @Value("${dubbo.registry.address}")
-    private String registryAddress;
-    
-    @Value("${dubbo.provider.timeout}")
-    private Integer timeout;
-    
-    @Value("${dubbo.provider.delay}")
-    private Integer delay;
-    
-    @Value("${dubbo.provider.retries}")
-    private Integer retries;
-    
-    @Value("${dubbo.consumer.check}")
-    private Boolean check;
-    
-    @Value("${dubbo.consumer.timeout}")
-    private Integer consumerTimeout;
-    
-    
 
     /**
      * 当前应用配置
@@ -71,7 +50,7 @@ public class DubboConfig {
     @Bean
     public RegistryConfig registry(){
     	RegistryConfig registry=new RegistryConfig();
-    	registry.setAddress("192.168.33.111:2181");
+    	registry.setAddress("192.168.1.107:2181");
     	registry.setProtocol("zookeeper");
     	registry.setId("zookeeperService");
     	registry.setDefault(true);

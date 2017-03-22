@@ -5,5 +5,5 @@
 	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
 	 default-lazy-init="true">    
     <dubbo:reference id="growUpPlanApiService" interface="com.fruit.growup.api.GrowUpPlanApiService"  
-	     timeout="30000" version="1.0.0"  registry="zookeeperClient" protocol="dubbo" check="false"/>
+	     timeout="30000" version="1.0.0"  registry="zookeeperClient" protocol="dubbo"/>
 </beans>
